@@ -54,6 +54,16 @@ body {
     align-items: center;
 }
 
+.logo-link {
+    text-decoration: none;
+    cursor: pointer;
+    transition: opacity 0.3s;
+}
+
+.logo-link:hover {
+    opacity: 0.8;
+}
+
 .logo {
     font-size: 1.5rem;
     font-weight: 800;
@@ -147,6 +157,42 @@ body {
     max-width: 900px;
     margin: 0 auto;
     padding: 2rem 0;
+}
+
+.hero-logo {
+    margin-bottom: 2rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    animation: fadeInUp 1s ease-out;
+}
+
+.logo-image {
+    max-width: 300px;
+    width: 100%;
+    height: auto;
+    border-radius: 20px;
+    box-shadow: 0 20px 60px rgba(0, 212, 255, 0.3),
+                0 0 40px rgba(131, 56, 236, 0.2);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    object-fit: contain;
+}
+
+.logo-image:hover {
+    transform: scale(1.05);
+    box-shadow: 0 25px 70px rgba(0, 212, 255, 0.4),
+                0 0 50px rgba(131, 56, 236, 0.3);
+}
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .hero-title {
@@ -708,6 +754,10 @@ section {
 
     .hero-actions {
         flex-direction: column;
+    }
+
+    .logo-image {
+        max-width: 200px;
     }
 
     .btn {

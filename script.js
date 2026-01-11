@@ -9,17 +9,21 @@ if (navToggle) {
 }
 
 // Smooth scroll
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function (e) {
-        e.preventDefault();
-        const target = document.querySelector(this.getAttribute('href'));
-        if (target) {
-            target.scrollIntoView({
-                behavior: 'smooth',
-                block: 'start'
-            });
-            navMenu.classList.remove('active');
-        }
+document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+            e.preventDefault();
+            const target = document.querySelector(this.getAttribute('href'));
+            if (target) {
+                target.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'start'
+                });
+                if (navMenu) {
+                    navMenu.classList.remove('active');
+                }
+            }
+        });
     });
 });
 
@@ -89,10 +93,12 @@ function initMatrix() {
 async function loadGlobalTokenAddress() {
     try {
         const response = await fetch('https://raw.githubusercontent.com/trv666trv-creator/automatic-engine/main/token-address.json');
+        if (!response.ok) {
+            return '';
+        }
         const data = await response.json();
         return data.mintAddress || '';
     } catch (error) {
-        console.log('Could not load global address from GitHub');
         return '';
     }
 }
@@ -221,6 +227,7 @@ function updateLinksWithToken(tokenAddress) {
         tokenAddress = mintAddressInput ? mintAddressInput.value.trim() : '';
     }
     
+    // Update links only if address is valid (Solana addresses are typically 32-44 characters)
     if (tokenAddress && tokenAddress.length > 20) {
         // Update Jupiter link
         const jupiterLinks = document.querySelectorAll('a[href*="jup.ag"]');
@@ -238,6 +245,12 @@ function updateLinksWithToken(tokenAddress) {
         const pumpLinks = document.querySelectorAll('a[href*="pump.fun"]');
         pumpLinks.forEach(link => {
             link.href = `https://pump.fun/${tokenAddress}`;
+        });
+        
+        // Update Birdeye link
+        const birdeyeLinks = document.querySelectorAll('a[href*="birdeye.so"]');
+        birdeyeLinks.forEach(link => {
+            link.href = `https://birdeye.so/token/${tokenAddress}?chain=solana`;
         });
     }
 }
