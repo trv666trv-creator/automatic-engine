@@ -232,13 +232,15 @@ body {
     font-size: 1rem;
     font-weight: 600;
     transition: all 0.3s;
+    cursor: default;
+}
+
+.address-input:read-only {
+    cursor: default;
 }
 
 .address-input:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.3);
-    background: var(--bg-card);
 }
 
 .address-input::placeholder {
@@ -427,12 +429,15 @@ body {
     color: var(--text-primary);
     font-size: 1rem;
     font-family: 'Courier New', monospace;
+    cursor: default;
+}
+
+.swap-input:read-only {
+    cursor: default;
 }
 
 .swap-input:focus {
     outline: none;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
 }
 
 /* Sections */
