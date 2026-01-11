@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Mem Token - Cryptocurrency token based on meme culture. Join the revolution!">
+    <title>Mem Token - Meme in Cryptocurrency</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <link rel="alternate icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><defs><linearGradient id='g' x1='0%' y1='0%' x2='100%' y2='100%'><stop offset='0%' stop-color='%2300d4ff'/><stop offset='100%' stop-color='%238338ec'/></linearGradient></defs><rect width='100' height='100' rx='20' fill='url(%23g)'/><text x='50' y='70' font-family='Arial' font-size='60' font-weight='bold' fill='white' text-anchor='middle'>M</text></svg>">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container">
+            <div class="nav-brand">
+                <span class="logo">MEM TOKEN</span>
+            </div>
+            <div class="nav-menu" id="navMenu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="news.html" class="nav-link">News</a>
+                <a href="lore.html" class="nav-link">Lore</a>
+                <a href="#swap" class="nav-link">Buy</a>
+            </div>
+            <button class="nav-toggle" id="navToggle">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-background">
+            <canvas id="matrixCanvas"></canvas>
+            <div class="particles"></div>
+        </div>
+        <div class="container">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="title-main">MEM TOKEN</span>
+                    <span class="title-subtitle">A meme, now a crypto</span>
+                </h1>
+                <p class="hero-description">
+                    A number, now a unit.<br>
+                    A meme, now a crypto.
+                </p>
+                
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <div class="stat-label">Mint Address</div>
+                        <input type="text" id="mintAddress" class="stat-value address-input" placeholder="Enter token address..." value="">
+                    </div>
+                </div>
+
+                <div class="hero-actions">
+                    <a href="https://jup.ag/" target="_blank" class="btn btn-primary">
+                        <span>Jupiter</span>
+                        Buy on Jupiter
+                    </a>
+                    <a href="https://dexscreener.com/solana/" target="_blank" class="btn btn-secondary">
+                        <span>DexScreener</span>
+                        View on DexScreener
+                    </a>
+                    <a href="https://pump.fun/" target="_blank" class="btn btn-tertiary">
+                        <span>Pump.fun</span>
+                        Token Page
+                    </a>
+                </div>
+
+                <div class="swap-widget" id="swapWidget">
+                    <h3>Swap directly on this page</h3>
+                    <div class="swap-container">
+                        <input type="text" id="tokenAddress" placeholder="Enter SOL token address..." class="swap-input">
+                        <button onclick="connectWallet()" class="btn btn-wallet" id="walletBtn">Connect Wallet</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Concept Section -->
+    <section class="concept">
+        <div class="container">
+            <h2 class="section-title">CONCEPT</h2>
+            <h3 class="section-subtitle">The Immortal Legend of the East</h3>
+            
+            <div class="concept-grid">
+                <div class="concept-card">
+                    <div class="concept-icon">🏛️</div>
+                    <h4 class="concept-title">LEGACY</h4>
+                    <p class="concept-text">
+                        15 Years of Dominance. MEM TOKEN is more than just a token—it's a cultural phenomenon 
+                        that has refused to die for over a decade, now reborn on the blockchain.
+                    </p>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-icon">🔥</div>
+                    <h4 class="concept-title">VIRALITY</h4>
+                    <p class="concept-text">
+                        A Number That Conquered Borders. From Tokyo to Shanghai, our meme has been spammed, 
+                        remixed, and celebrated millions of times. It's a linguistic virus that turned a simple 
+                        sequence into a global signal.
+                    </p>
+                </div>
+
+                <div class="concept-card">
+                    <div class="concept-icon">💎</div>
+                    <h4 class="concept-title">EVOLUTION</h4>
+                    <p class="concept-text">
+                        From Meme to Currency. MEM TOKEN isn't just another token—it's the financialization 
+                        of a legend. We are bridging the gap between hardcore internet subculture and the world of Solana.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Mission Section -->
+    <section class="mission">
+        <div class="container">
+            <h2 class="section-title">THE MISSION</h2>
+            <h3 class="section-subtitle">Turning Internet Chaos into a Global Playground</h3>
+            
+            <div class="mission-grid">
+                <div class="mission-item">
+                    <div class="mission-icon">🌐</div>
+                    <h4 class="mission-title">GLOBAL DOMINATION</h4>
+                    <p class="mission-text">
+                        MEM TOKEN is more than a token—it's a digital handshake. We are taking the legendary 
+                        meme and unleashing it on the world. No deep lore or complex explanations needed. 
+                        It's about pure momentum, shared vibes, and the thrill of the internet doing its thing.
+                    </p>
+                </div>
+
+                <div class="mission-item">
+                    <div class="mission-icon">🎮</div>
+                    <h4 class="mission-title">GAMIFY THE VOLATILITY</h4>
+                    <p class="mission-text">
+                        Why just watch the chart when you can play it? We're transforming market movements 
+                        into entertainment. With our official app, users can dive into "High & Low" games, 
+                        track real-time data, and compete in global virtual rankings.
+                    </p>
+                </div>
+
+                <div class="mission-item">
+                    <div class="mission-icon">🎭</div>
+                    <h4 class="mission-title">PURE ENTERTAINMENT</h4>
+                    <p class="mission-text">
+                        A long-term project for the legends of the web. MEM TOKEN is built for the community, 
+                        by a solo developer who loves the meme as much as you do. Whether the price is pumping 
+                        or dumping, the goal is simple: create a space where the "祭り" (festival) never ends.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lore Section Preview -->
+    <section class="lore-preview">
+        <div class="container">
+            <h2 class="section-title">LORE: The Legend of the Meme</h2>
+            <h3 class="section-subtitle">The King of the Internet</h3>
+            <p class="lore-text">
+                How a simple sequence of digits conquered the internet.<br><br>
+                Every culture has its "Final Boss" of memes. In the West, you have Doge. 
+                In the East—we have MEM TOKEN. This meme became more than just digits; 
+                it is a cultural titan that has dominated forums, videos, and street culture 
+                for over 15 years.
+            </p>
+            <a href="lore.html" class="btn btn-outline">Read the lore</a>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news">
+        <div class="container">
+            <h2 class="section-title">NEWS</h2>
+            <h3 class="section-subtitle">Updates from the void</h3>
+            
+            <div class="news-grid">
+                <article class="news-card">
+                    <div class="news-date">Jan 03, 2026</div>
+                    <h4 class="news-title">DEXTools Information Update Completed</h4>
+                    <p class="news-excerpt">
+                        Paid update completed on Jan 3, 2026—official icons, banners, and social metadata 
+                        are now fully integrated on DEXTools.
+                    </p>
+                    <a href="news.html" class="news-link">Read →</a>
+                </article>
+
+                <article class="news-card">
+                    <div class="news-date">Dec 26, 2025</div>
+                    <h4 class="news-title">DexScreener Information Update Completed</h4>
+                    <p class="news-excerpt">
+                        Paid metadata listing completed on Dec 26, 2025—improves token presentation 
+                        and visibility on DexScreener.
+                    </p>
+                    <a href="news.html" class="news-link">Read →</a>
+                </article>
+
+                <article class="news-card">
+                    <div class="news-date">Dec 25, 2025</div>
+                    <h4 class="news-title">MEM TOKEN Reached Major Highs</h4>
+                    <p class="news-excerpt">
+                        Two historical peaks on Dec 25, 2025: ~200× pre-listing (bonding curve) 
+                        and ~35× post-listing (DEX trading).
+                    </p>
+                    <a href="news.html" class="news-link">Read →</a>
+                </article>
+            </div>
+
+            <a href="news.html" class="btn btn-outline">View All →</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">
+                    <h3>MEM TOKEN</h3>
+                    <p>
+                        Derived from a meme, MEM TOKEN is a cryptocurrency token on the Solana blockchain, 
+                        created with big love.
+                    </p>
+                </div>
+
+                <div class="footer-links">
+                    <div class="footer-column">
+                        <h4>Pages</h4>
+                        <a href="#home">Home</a>
+                        <a href="news.html">News</a>
+                        <a href="lore.html">Lore</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Social</h4>
+                        <a href="#" target="_blank">X (Twitter)</a>
+                        <a href="#" target="_blank">Telegram</a>
+                        <a href="#" target="_blank">Discord</a>
+                    </div>
+
+                    <div class="footer-column">
+                        <h4>Trade</h4>
+                        <a href="https://jup.ag/" target="_blank">Jupiter</a>
+                        <a href="https://dexscreener.com/solana/" target="_blank">DexScreener</a>
+                        <a href="https://pump.fun/" target="_blank">Pump.fun</a>
+                        <a href="https://birdeye.so/" target="_blank">Birdeye</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer-bottom">
+                <p>© 2026 MEM TOKEN. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,7 @@
+СКОПИРУЙТЕ ЭТОТ ПРОМПТ ДЛЯ НЕЙРОСЕТИ:
+
+cryptocurrency token logo, large text "MEME" in bold glowing neon letters, gradient background from cyan blue (#00d4ff) to purple (#8338ec), rocket emoji 🚀, diamond emoji 💎, dark space background, halo glow effect around text, square format 1000x1000px, high contrast, vibrant colors, modern futuristic design, 8k resolution
+
+---
+Для Midjourney добавьте: --ar 1:1 --v 6
+---
