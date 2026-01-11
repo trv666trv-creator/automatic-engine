@@ -85,11 +85,22 @@ function initMatrix() {
 
 
 
-// Update mint address from URL parameter or localStorage
-function updateMintAddress() {
-    const urlParams = new URLSearchParams(window.location.search);
-    const mintAddress = urlParams.get('mint') || localStorage.getItem('tokenMintAddress');
-    const isLocked = localStorage.getItem('tokenAddressLocked') === 'true';
+// Load token address from JSON file (global storage) - ONLY source
+async function loadGlobalTokenAddress() {
+    try {
+        const response = await fetch('https://raw.githubusercontent.com/trv666trv-creator/automatic-engine/main/token-address.json');
+        const data = await response.json();
+        return data.mintAddress || '';
+    } catch (error) {
+        console.log('Could not load global address from GitHub');
+        return '';
+    }
+}
+
+// Update mint address from global JSON file ONLY
+async function updateMintAddress() {
+    // Only read from JSON file (global storage)
+    const mintAddress = await loadGlobalTokenAddress();
     
     const mintAddressInput = document.getElementById('mintAddress');
     const tokenAddressInput = document.getElementById('tokenAddress');
@@ -98,144 +109,33 @@ function updateMintAddress() {
         if (mintAddressInput) {
             mintAddressInput.value = mintAddress;
             mintAddressInput.title = mintAddress;
-            
-            // Lock if already saved
-            if (isLocked) {
-                mintAddressInput.readOnly = true;
-                mintAddressInput.style.cursor = 'not-allowed';
-                mintAddressInput.style.opacity = '0.8';
-            }
+            mintAddressInput.readOnly = true;
+            mintAddressInput.style.cursor = 'default';
         }
         if (tokenAddressInput) {
             tokenAddressInput.value = mintAddress;
-            
-            // Lock if already saved
-            if (isLocked) {
-                tokenAddressInput.readOnly = true;
-                tokenAddressInput.style.cursor = 'not-allowed';
-                tokenAddressInput.style.opacity = '0.8';
-            }
+            tokenAddressInput.readOnly = true;
+            tokenAddressInput.style.cursor = 'default';
         }
-        localStorage.setItem('tokenMintAddress', mintAddress);
+        // Update links immediately
+        updateLinksWithToken(mintAddress);
     } else {
         if (mintAddressInput) {
             mintAddressInput.value = '';
             mintAddressInput.title = '';
+            mintAddressInput.readOnly = true;
+            mintAddressInput.placeholder = 'Token address will appear here...';
+        }
+        if (tokenAddressInput) {
+            tokenAddressInput.value = '';
+            tokenAddressInput.readOnly = true;
+            tokenAddressInput.placeholder = 'Token address will appear here...';
         }
     }
 }
 
-// Save token address from mint address input
-const mintAddressInput = document.getElementById('mintAddress');
-if (mintAddressInput) {
-    mintAddressInput.addEventListener('input', (e) => {
-        const address = e.target.value.trim();
-        if (address && address.length > 20) {
-            localStorage.setItem('tokenMintAddress', address);
-            updateLinksWithToken();
-            
-            // Update swap widget input
-            const tokenAddressInput = document.getElementById('tokenAddress');
-            if (tokenAddressInput) {
-                tokenAddressInput.value = address;
-            }
-        }
-    });
-    
-    // Lock on blur only if address is valid and was saved before
-    mintAddressInput.addEventListener('blur', (e) => {
-        const address = e.target.value.trim();
-        const wasLocked = localStorage.getItem('tokenAddressLocked') === 'true';
-        
-        if (address && address.length > 20 && wasLocked) {
-            // Lock if it was locked before
-            mintAddressInput.readOnly = true;
-            mintAddressInput.style.cursor = 'not-allowed';
-            mintAddressInput.style.opacity = '0.8';
-        } else if (address && address.length > 20) {
-            // First time save - lock it
-            localStorage.setItem('tokenAddressLocked', 'true');
-            mintAddressInput.readOnly = true;
-            mintAddressInput.style.cursor = 'not-allowed';
-            mintAddressInput.style.opacity = '0.8';
-            
-            const tokenAddressInput = document.getElementById('tokenAddress');
-            if (tokenAddressInput) {
-                tokenAddressInput.readOnly = true;
-                tokenAddressInput.style.cursor = 'not-allowed';
-                tokenAddressInput.style.opacity = '0.8';
-            }
-        }
-    });
-    
-    // Double click to unlock (for admin)
-    mintAddressInput.addEventListener('dblclick', (e) => {
-        if (mintAddressInput.readOnly) {
-            mintAddressInput.readOnly = false;
-            mintAddressInput.style.cursor = 'text';
-            mintAddressInput.style.opacity = '1';
-            mintAddressInput.focus();
-            localStorage.removeItem('tokenAddressLocked');
-        }
-    });
-}
-
-// Save token address from swap widget input
-const tokenAddressInput = document.getElementById('tokenAddress');
-if (tokenAddressInput) {
-    tokenAddressInput.addEventListener('input', (e) => {
-        const address = e.target.value.trim();
-        if (address && address.length > 20) {
-            localStorage.setItem('tokenMintAddress', address);
-            updateMintAddress();
-            updateLinksWithToken();
-        }
-    });
-    
-    // Lock on blur only if address is valid and was saved before
-    tokenAddressInput.addEventListener('blur', (e) => {
-        const address = e.target.value.trim();
-        const wasLocked = localStorage.getItem('tokenAddressLocked') === 'true';
-        
-        if (address && address.length > 20 && wasLocked) {
-            // Lock if it was locked before
-            tokenAddressInput.readOnly = true;
-            tokenAddressInput.style.cursor = 'not-allowed';
-            tokenAddressInput.style.opacity = '0.8';
-        } else if (address && address.length > 20) {
-            // First time save - lock it
-            localStorage.setItem('tokenAddressLocked', 'true');
-            tokenAddressInput.readOnly = true;
-            tokenAddressInput.style.cursor = 'not-allowed';
-            tokenAddressInput.style.opacity = '0.8';
-            
-            const mintAddressInput = document.getElementById('mintAddress');
-            if (mintAddressInput) {
-                mintAddressInput.readOnly = true;
-                mintAddressInput.style.cursor = 'not-allowed';
-                mintAddressInput.style.opacity = '0.8';
-            }
-        }
-    });
-    
-    // Double click to unlock (for admin)
-    tokenAddressInput.addEventListener('dblclick', (e) => {
-        if (tokenAddressInput.readOnly) {
-            tokenAddressInput.readOnly = false;
-            tokenAddressInput.style.cursor = 'text';
-            tokenAddressInput.style.opacity = '1';
-            tokenAddressInput.focus();
-            localStorage.removeItem('tokenAddressLocked');
-            
-            const mintAddressInput = document.getElementById('mintAddress');
-            if (mintAddressInput) {
-                mintAddressInput.readOnly = false;
-                mintAddressInput.style.cursor = 'text';
-                mintAddressInput.style.opacity = '1';
-            }
-        }
-    });
-}
+// Address can ONLY be changed via token-address.json file on GitHub
+// Input fields are read-only
 
 // Solana wallet connection
 async function connectWallet() {
@@ -257,10 +157,13 @@ async function connectWallet() {
         walletBtn.style.background = 'linear-gradient(135deg, #00ff00 0%, #00cc00 100%)';
         
         // Redirect to Jupiter with token address
-        const tokenAddress = document.getElementById('tokenAddress').value || localStorage.getItem('tokenMintAddress');
-        if (tokenAddress) {
+        const tokenAddressInput = document.getElementById('tokenAddress');
+        const tokenAddress = tokenAddressInput ? tokenAddressInput.value.trim() : '';
+        if (tokenAddress && tokenAddress.length > 20) {
             const jupiterUrl = `https://jup.ag/swap/SOL-${tokenAddress}`;
             window.open(jupiterUrl, '_blank');
+        } else {
+            alert('Token address is not set. Please wait for the address to load from token-address.json');
         }
     } catch (err) {
         console.error('Error connecting wallet:', err);
@@ -295,8 +198,8 @@ const observer = new IntersectionObserver((entries) => {
 }, observerOptions);
 
 // Observe all sections
-document.addEventListener('DOMContentLoaded', () => {
-    updateMintAddress();
+document.addEventListener('DOMContentLoaded', async () => {
+    await updateMintAddress(); // Load address from JSON file
     initMatrix(); // Initialize matrix animation
     
     // Observe elements for animation
@@ -304,12 +207,21 @@ document.addEventListener('DOMContentLoaded', () => {
         observer.observe(el);
     });
     
+    // Refresh address every 30 seconds to check for updates
+    setInterval(async () => {
+        await updateMintAddress();
+    }, 30000);
 });
 
 // Update button links with token address
-function updateLinksWithToken() {
-    const tokenAddress = localStorage.getItem('tokenMintAddress');
-    if (tokenAddress) {
+function updateLinksWithToken(tokenAddress) {
+    // Get address from parameter or from input field
+    if (!tokenAddress) {
+        const mintAddressInput = document.getElementById('mintAddress');
+        tokenAddress = mintAddressInput ? mintAddressInput.value.trim() : '';
+    }
+    
+    if (tokenAddress && tokenAddress.length > 20) {
         // Update Jupiter link
         const jupiterLinks = document.querySelectorAll('a[href*="jup.ag"]');
         jupiterLinks.forEach(link => {
@@ -322,21 +234,12 @@ function updateLinksWithToken() {
             link.href = `https://dexscreener.com/solana/${tokenAddress}`;
         });
         
-        // Update Pump.fun link (if needed)
+        // Update Pump.fun link
         const pumpLinks = document.querySelectorAll('a[href*="pump.fun"]');
         pumpLinks.forEach(link => {
-            // Pump.fun uses different URL structure
             link.href = `https://pump.fun/${tokenAddress}`;
         });
     }
 }
 
-// Call on page load
-document.addEventListener('DOMContentLoaded', updateLinksWithToken);
-
-// Add click handler for swap input to update links
-if (tokenAddressInput) {
-    tokenAddressInput.addEventListener('blur', () => {
-        updateLinksWithToken();
-    });
-}
+// Links are updated automatically when updateMintAddress() runs
